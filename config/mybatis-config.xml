@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<properties resource="application.properties">
+		<!-- <property name="jdbc.username" value="db_user" />
+		<property name="jdbc.password" value="verysecurepwd" /> -->
+	</properties>
+	<typeAliases>
+		<package name="com.staples.domain"/>
+	</typeAliases>
+	<environments default="oracle-dev">
+		<environment id="mysql-dev">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${jdbc.mysql.driverClassName}" />
+				<property name="url" value="${jdbc.mysql.url}" />
+				<property name="username" value="${jdbc.mysql.username}" />
+				<property name="password" value="${jdbc.mysql.password}" />
+			</dataSource>
+		</environment>
+		<environment id="oracle-dev">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${jdbc.oracle.driverClassName}" />
+				<property name="url" value="${jdbc.oracle.url}" />
+				<property name="username" value="${jdbc.oracle.username}" />
+				<property name="password" value="${jdbc.oracle.password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="com/staples/mapper/OutputMapper.xml" />
+	</mappers>
+</configuration>
