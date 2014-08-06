@@ -13,7 +13,7 @@
 	<environments default="oracle-dev">
 		<environment id="mysql-dev">
 			<transactionManager type="JDBC" />
-			<dataSource type="POOLED">
+			<dataSource type="UNPOOLED">
 				<property name="driver" value="${jdbc.mysql.driverClassName}" />
 				<property name="url" value="${jdbc.mysql.url}" />
 				<property name="username" value="${jdbc.mysql.username}" />
@@ -22,11 +22,20 @@
 		</environment>
 		<environment id="oracle-dev">
 			<transactionManager type="JDBC" />
-			<dataSource type="POOLED">
-				<property name="driver" value="${jdbc.oracle.driverClassName}" />
-				<property name="url" value="${jdbc.oracle.url}" />
-				<property name="username" value="${jdbc.oracle.username}" />
-				<property name="password" value="${jdbc.oracle.password}" />
+			<dataSource type="UNPOOLED">
+				<property name="driver" value="${jdbc.oracle.dev.driverClassName}" />
+				<property name="url" value="${jdbc.oracle.dev.url}" />
+				<property name="username" value="${jdbc.oracle.dev.username}" />
+				<property name="password" value="${jdbc.oracle.dev.password}" />
+			</dataSource>
+		</environment>
+		<environment id="oracle-prod">
+			<transactionManager type="JDBC" />
+			<dataSource type="UNPOOLED">
+				<property name="driver" value="${jdbc.oracle.prod.driverClassName}" />
+				<property name="url" value="${jdbc.oracle.prod.url}" />
+				<property name="username" value="${jdbc.oracle.prod.username}" />
+				<property name="password" value="${jdbc.oracle.prod.password}" />
 			</dataSource>
 		</environment>
 	</environments>

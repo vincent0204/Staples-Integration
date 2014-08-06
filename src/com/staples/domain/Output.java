@@ -72,8 +72,6 @@ public class Output {
 
     private BigDecimal totalCredit;
 
-    private BigDecimal remainedCredit;
-
     private String statementIdentification;
 
     private String statementIdentificationFrom;
@@ -107,6 +105,30 @@ public class Output {
     private Date finModifiedDate;
 
     private Date salesforceModifiedDate;
+
+    private String accountName;
+
+    private String provinceSegment;
+
+    private String citySegment;
+
+    private String districtSegment;
+
+    private String phone;
+
+    private BigDecimal staff;
+
+    private String industry;
+
+    private String accountSource;
+
+    private String segmentation;
+
+    private String natureOfFirm;
+
+    private String purchaseType;
+
+    private String isNewAccount;
 
     public BigDecimal getId() {
         return id;
@@ -380,14 +402,6 @@ public class Output {
         this.totalCredit = totalCredit;
     }
 
-    public BigDecimal getRemainedCredit() {
-        return remainedCredit;
-    }
-
-    public void setRemainedCredit(BigDecimal remainedCredit) {
-        this.remainedCredit = remainedCredit;
-    }
-
     public String getStatementIdentification() {
         return statementIdentification;
     }
@@ -522,5 +536,101 @@ public class Output {
 
     public void setSalesforceModifiedDate(Date salesforceModifiedDate) {
         this.salesforceModifiedDate = salesforceModifiedDate;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName == null ? null : accountName.trim();
+    }
+
+    public String getProvinceSegment() {
+        return provinceSegment;
+    }
+
+    public void setProvinceSegment(String provinceSegment) {
+        this.provinceSegment = provinceSegment == null ? null : provinceSegment.trim();
+    }
+
+    public String getCitySegment() {
+        return citySegment;
+    }
+
+    public void setCitySegment(String citySegment) {
+        this.citySegment = citySegment == null ? null : citySegment.trim();
+    }
+
+    public String getDistrictSegment() {
+        return districtSegment;
+    }
+
+    public void setDistrictSegment(String districtSegment) {
+        this.districtSegment = districtSegment == null ? null : districtSegment.trim();
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone == null ? null : phone.trim();
+    }
+
+    public BigDecimal getStaff() {
+        return staff;
+    }
+
+    public void setStaff(BigDecimal staff) {
+        this.staff = staff;
+    }
+
+    public String getIndustry() {
+        return industry;
+    }
+
+    public void setIndustry(String industry) {
+        this.industry = industry == null ? null : industry.trim();
+    }
+
+    public String getAccountSource() {
+        return accountSource;
+    }
+
+    public void setAccountSource(String accountSource) {
+        this.accountSource = accountSource == null ? null : accountSource.trim();
+    }
+
+    public String getSegmentation() {
+        return segmentation;
+    }
+
+    public void setSegmentation(String segmentation) {
+        this.segmentation = segmentation == null ? null : segmentation.trim();
+    }
+
+    public String getNatureOfFirm() {
+        return natureOfFirm;
+    }
+
+    public void setNatureOfFirm(String natureOfFirm) {
+        this.natureOfFirm = natureOfFirm == null ? null : natureOfFirm.trim();
+    }
+
+    public String getPurchaseType() {
+        return purchaseType;
+    }
+
+    public void setPurchaseType(String purchaseType) {
+        this.purchaseType = purchaseType == null ? null : purchaseType.trim();
+    }
+
+    public String getIsNewAccount() {
+        return isNewAccount;
+    }
+
+    public void setIsNewAccount(String isNewAccount) {
+        this.isNewAccount = isNewAccount == null ? null : isNewAccount.trim();
     }
 }

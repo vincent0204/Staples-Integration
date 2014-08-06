@@ -1,14 +1,10 @@
 package com.staples.service;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 import com.sforce.async.AsyncApiException;
 import com.sforce.async.OperationEnum;
@@ -18,101 +14,62 @@ import com.staples.domain.Output;
 import com.staples.mapper.OutputMapper;
 import com.staples.util.CsvUtil;
 import com.staples.util.MyBatisSqlSessionFactory;
+import com.staples.util.PropsUtil;
 
 public class OutputService {
-	private Logger logger = LoggerFactory.getLogger(getClass());
-
-	public void theSum() {
-		SqlSession session = MyBatisSqlSessionFactory.openSession();
-
-		Map<String, Object> params = new HashMap<String, Object>();
-
-		OutputMapper spMapper = session.getMapper(OutputMapper.class);
-		spMapper.theSum(params);
-
-		logger.debug((Integer) params.get("sum") + "");
-		
-		
-	}
+	private static Logger logger = Logger.getLogger(OutputService.class);
 	
-	public void syncInformation(){
+	public static void main(String[] args) {
+		new OutputService().syncInformation();
+	}
+
+	public void syncInformation() {
 		SqlSession session = MyBatisSqlSessionFactory.openSession();
-		
+
 		try {
-			int countOfCusInfo = updateCustomerInformation();
-			int countOfSalInfo = updateSalesInformation();
-			int countOfFinInfo = updateFinanceInformation();
-			sendInformationToSalesforce(
-					generateCVSfile(countOfCusInfo, countOfSalInfo, countOfFinInfo));
+			generateCVSfile();
+			boolean isSuccess = sendInformationToSalesforce(
+					PropsUtil.SF_SERVER.getProperty("staples.username"), 
+					PropsUtil.SF_SERVER.getProperty("staples.password"),
+					PropsUtil.SF_SERVER.getProperty("staples.url")
+					);
+			if(isSuccess) updateOutputStatusY();
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		} finally {
 			session.close();
 		}
 	}
-	
-	private int updateCustomerInformation(){
-		return 0;
+
+	void generateCVSfile() {
+		SqlSession session = MyBatisSqlSessionFactory.openSession();
+		logger.info("OpenSession --> Database Environment: "
+				+ session.getConfiguration().getEnvironment().getId());
+		OutputMapper outputMapper = session.getMapper(OutputMapper.class);
+
+		List<Output> exportData = outputMapper.getAllUpdatedInfo();
+		logger.info("count of exportData: " + exportData.size());
+		CsvUtil.createCSVFile(exportData, PropsUtil.FIELDS_MAPPING);
+	}
+
+	boolean sendInformationToSalesforce(String server, String password, String url)
+			throws ConnectionException, AsyncApiException, IOException {
+		return new BulkUtil(server, password, url).runJob("Account", OperationEnum.upsert);
 	}
 	
-	private int updateSalesInformation(){
-		return 0;
-	}
-	
-	private int updateFinanceInformation(){
-		return 0;
-	}
-	
-	String generateCVSfile(int countOfCusInfo, int countOfSalInfo, int countOfFinInfo){
+	void updateOutputStatusY(){
 		SqlSession session = MyBatisSqlSessionFactory.openSession();
 		OutputMapper outputMapper = session.getMapper(OutputMapper.class);
-		
-		LinkedHashMap<String, String> rowMapper = new LinkedHashMap<String, String>();
-		if (countOfCusInfo > 0) {
-			rowMapper.putAll(getCusHeader());
-		}
-		
-		if (countOfSalInfo > 0) {
-			rowMapper.putAll(getSalHeader());
-		}
-		
-		if (countOfFinInfo > 0) {
-			rowMapper.putAll(getFinHeader());
-			
-		}
-		
-		List<Output> exportData = outputMapper.getAllUpdatedInfo();
-		logger.debug("exportData: " + exportData.size());
-		
-		String filename = "output";
-		CsvUtil.createCSVFile(exportData, rowMapper, "", filename);
-		return filename;
-	}
-	
-	private Map<String, String> getFinHeader() {
-		// TODO Auto-generated method stub
-		HashMap<String, String> finHeaderMap = new LinkedHashMap<String, String>();
-		return finHeaderMap;
+		int noOfRowsUpdated = outputMapper.updateOutputStatusY();
+		session.commit();
+		logger.info("update output status Y : " + noOfRowsUpdated);
 	}
 
-	private Map<String, String> getSalHeader() {
-		// TODO Auto-generated method stub
-		HashMap<String, String> salHeaderMap = new LinkedHashMap<String, String>();
-		return salHeaderMap;
-	}
-
-	private Map<String, String> getCusHeader() {
-		// TODO Auto-generated method stub
-		HashMap<String, String> cusHeaderMap = new LinkedHashMap<String, String>();
-		cusHeaderMap.put("getCustomType", "Custom_Type");
-		cusHeaderMap.put("getBdSales", "BD_Sales");
-		cusHeaderMap.put("getSapRefNo", "SAP_Ref_No");
-		
-		return cusHeaderMap;
-	}
-
-	void sendInformationToSalesforce(String filename) throws ConnectionException, AsyncApiException, IOException{
-		BulkUtil example = new BulkUtil("test@staples.cn.vendor", "Staples_16fAkzLepEmskwjrvEDNITupYK");
-		example.runJob("Account", OperationEnum.upsert, filename);
+	public void updateOutputStatusN() {
+		SqlSession session = MyBatisSqlSessionFactory.openSession();
+		OutputMapper outputMapper = session.getMapper(OutputMapper.class);
+		int noOfRowsUpdated = outputMapper.updateOutputStatusN();
+		session.commit();
+		logger.info("update output status N : " + noOfRowsUpdated);
 	}
 }

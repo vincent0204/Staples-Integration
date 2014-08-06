@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 import com.sforce.async.AsyncApiException;
 import com.sforce.async.BatchInfo;
 import com.sforce.async.BatchStateEnum;
@@ -25,47 +27,44 @@ import com.sforce.async.OperationEnum;
 import com.sforce.soap.partner.PartnerConnection;
 import com.sforce.ws.ConnectionException;
 import com.sforce.ws.ConnectorConfig;
+import com.staples.util.PropsUtil;
 
 public class BulkUtil {
 	
-	private static final int MAX_BYTES_PER_BATCH = 10000000;
-	private static final int MAX_ROWS_PER_BATCH = 10000;
+	private static final String SAP_EXTERNAL_FIELD = "SAP_CUS_SAP_Ref_No__c";
+	private static final int MAX_BYTES_PER_BATCH = 5000000;
+	private static final int MAX_ROWS_PER_BATCH = 5000;
 	private static final String LINE_END = "\n";
 	private static final String UTF_8 = "UTF-8";
 	private static final String API_VERSION = "30.0";
-	private static final String SOAP_URL = "https://test.salesforce.com/services/Soap/u/30.0";
+	private static final Logger logger = Logger.getLogger(BulkUtil.class);
 	
 	private BulkConnection connection;
 
-
-	public static void main(String[] args) throws AsyncApiException,
-			ConnectionException, IOException {
-		BulkUtil example = new BulkUtil("test@staples.cn.vendor", "Staples_16fAkzLepEmskwjrvEDNITupYK");
-		example.runJob("Account", OperationEnum.update, "csv/Account.csv");
-	}
-
-	public BulkUtil(String userName, String password) throws ConnectionException, AsyncApiException {
-		connection = this.getBulkConnection(userName, password);
+	public BulkUtil(String userName, String password, String url) throws ConnectionException, AsyncApiException {
+		connection = this.getBulkConnection(userName, password, url);
 	}
 
 	/**
 	 * Creates a Bulk API job and uploads batches for a CSV file.
 	 */
-	public void runJob(String sobjectType, OperationEnum operation, String sampleFileName) throws AsyncApiException,
+	public boolean runJob(String sobjectType, OperationEnum operation) throws AsyncApiException,
 			ConnectionException, IOException {
 		JobInfo job = createJob(sobjectType, operation);
-		List<BatchInfo> batchInfoList = createBatchesFromCSVFile(connection, job, sampleFileName);
+		List<BatchInfo> batchInfoList = createBatchesFromCSVFile(connection, job, PropsUtil.getOutputUrI());
 		closeJob(connection, job.getId());
 		awaitCompletion(connection, job, batchInfoList);
-		checkResults(connection, job, batchInfoList);
+		return checkResults(connection, job, batchInfoList);
 	}
 
 	/**
 	 * Gets the results of the operation and checks for errors.
 	 */
-	private void checkResults(BulkConnection connection, JobInfo job,
+	private boolean checkResults(BulkConnection connection, JobInfo job,
 			List<BatchInfo> batchInfoList) throws AsyncApiException,
 			IOException {
+		
+		boolean isSuccess = true;
 		// batchInfoList was populated when batches were created and submitted
 		for (BatchInfo b : batchInfoList) {
 			CSVReader rdr = new CSVReader(connection.getBatchResultStream(
@@ -83,12 +82,15 @@ public class BulkUtil {
 				String id = resultInfo.get("Id");
 				String error = resultInfo.get("Error");
 				if (success && created) {
-					System.out.println("Created row with id " + id);
+					logger.info("Created row with id " + id);
 				} else if (!success) {
-					System.out.println("Failed with error: " + error);
+					isSuccess = false;
+					logger.info("Failed with error: " + error);
 				}
 			}
 		}
+		
+		return isSuccess;
 	}
 
 	private void closeJob(BulkConnection connection, String jobId)
@@ -122,7 +124,7 @@ public class BulkUtil {
 				Thread.sleep(sleepTime);
 			} catch (InterruptedException e) {
 			}
-			System.out.println("Awaiting results..." + incomplete.size());
+			logger.info("Awaiting results..." + incomplete.size());
 			sleepTime = 10000L;
 			BatchInfo[] statusList = connection.getBatchInfoList(job.getId())
 					.getBatchInfo();
@@ -130,8 +132,7 @@ public class BulkUtil {
 				if (b.getState() == BatchStateEnum.Completed
 						|| b.getState() == BatchStateEnum.Failed) {
 					if (incomplete.remove(b.getId())) {
-						System.out.println("BATCH STATUS:\n" + b);
-
+						logger.info("BATCH STATUS:\n" + b);
 					}
 				}
 			}
@@ -154,18 +155,18 @@ public class BulkUtil {
 		job.setObject(sobjectType);
 		job.setOperation(operation);
 		job.setContentType(ContentType.CSV);
-		job.setExternalIdFieldName("SAP_CUS_SAP_Ref_No__c");
+		job.setExternalIdFieldName(SAP_EXTERNAL_FIELD);
 		job = connection.createJob(job);
-		System.out.println(job);
+		logger.info(job);
 		return job;
 	}
 	
 	/**
 	 * Create the BulkConnection used to call Bulk API operations.
 	 */
-	private BulkConnection getBulkConnection(String userName, String password)
+	private BulkConnection getBulkConnection(String userName, String password, String url)
 			throws ConnectionException, AsyncApiException {
-		ConnectorConfig partnerConfig = getPartnerConfig(userName, password);
+		ConnectorConfig partnerConfig = getPartnerConfig(userName, password, url);
 		
 		ConnectorConfig config = new ConnectorConfig();
 		config.setSessionId(partnerConfig.getSessionId());
@@ -184,11 +185,11 @@ public class BulkUtil {
 	}
 
 	private ConnectorConfig getPartnerConfig(String userName,
-			String password) throws ConnectionException {
+			String password, String url) throws ConnectionException {
 		ConnectorConfig partnerConfig = new ConnectorConfig();
 		partnerConfig.setUsername(userName);
 		partnerConfig.setPassword(password);
-		partnerConfig.setAuthEndpoint(SOAP_URL);
+		partnerConfig.setAuthEndpoint(url);
 		// Creating the connection automatically handles login and stores
 		// the session in partnerConfig
 		// When PartnerConnection is instantiated, a login is implicitly
@@ -285,7 +286,7 @@ public class BulkUtil {
 		try {
 			BatchInfo batchInfo = connection.createBatchFromStream(jobInfo,
 					tmpInputStream);
-			System.out.println(batchInfo);
+			logger.debug(batchInfo);
 			batchInfos.add(batchInfo);
 		} finally {
 			tmpInputStream.close();

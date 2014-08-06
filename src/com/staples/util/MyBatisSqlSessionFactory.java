@@ -1,8 +1,12 @@
 package com.staples.util;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.*;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 public class MyBatisSqlSessionFactory {
 	private static SqlSessionFactory sqlSessionFactory;
@@ -16,7 +20,6 @@ public class MyBatisSqlSessionFactory {
 				sqlSessionFactory = new SqlSessionFactoryBuilder()
 						.build(inputStream);
 			} catch (IOException e) {
-				System.out.println(e.getMessage());
 				throw new RuntimeException(e.getCause());
 			}
 		}
@@ -24,6 +27,7 @@ public class MyBatisSqlSessionFactory {
 	}
 
 	public static SqlSession openSession() {
-		return getSqlSessionFactory().openSession();
+		SqlSession session = getSqlSessionFactory().openSession();
+		return session;
 	}
 }
