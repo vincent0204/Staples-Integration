@@ -14,15 +14,15 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
-import com.staples.domain.Output;
+import com.staples.domain.History;
 
-public class CsvUtil {
+public class CsvHistoryUtil {
 
 	private static final String COMMA = ",";
 	private static final String DOUBLE_QUOTATION = "\"";
 	private static final Logger logger = Logger.getLogger(CsvUtil.class);
 
-	public static File createCSVFile(List<Output> exportData,
+	public static File createCSVFile(List<History> exportData,
 			Properties rowMapper, File csvFile) {
 
 		BufferedWriter csvFileOutputStream = null;
@@ -65,13 +65,13 @@ public class CsvUtil {
 		csvFileOutputStream.newLine();
 	}
 
-	private static void writeDetail(List<Output> exportData,
+	private static void writeDetail(List<History> exportData,
 			Properties rowMapper, BufferedWriter csvFileOutputStream)
 			throws IOException, NoSuchMethodException, SecurityException,
 			IllegalAccessException, IllegalArgumentException,
 			InvocationTargetException {
 
-		for (Iterator<Output> iterData = exportData.iterator(); iterData
+		for (Iterator<History> iterData = exportData.iterator(); iterData
 				.hasNext();) {
 			Object obj = iterData.next();
 			Set<String> headers = rowMapper.stringPropertyNames();
@@ -79,7 +79,7 @@ public class CsvUtil {
 					.hasNext();) {
 				String methodName = (String) iterField.next();
 				boolean hasNextField = iterField.hasNext();
-				outputOneline(csvFileOutputStream, (Output) obj, methodName,
+				historyOneline(csvFileOutputStream, (History) obj, methodName,
 						hasNextField);
 			}
 
@@ -88,47 +88,23 @@ public class CsvUtil {
 		}
 	}
 
-	private static void outputOneline(BufferedWriter csvFileOutputStream,
-			Output output, String key, boolean hasNextField)
+	private static void historyOneline(BufferedWriter csvFileOutputStream,
+			History history, String methodName, boolean hasNextField)
 			throws NoSuchMethodException, SecurityException,
 			IllegalAccessException, IllegalArgumentException,
 			InvocationTargetException, IOException {
-		String fieldCategory = key.substring(0, 7);
-		String methodName = "get" + key.substring(8, 9).toUpperCase()
-				+ key.substring(9);
-		Method method = Output.class.getMethod(methodName);
+		
+		Method method = History.class.getMethod("get" + methodName.substring(0,1).toUpperCase() + methodName.substring(1));
 
-		Object value = "";
-		if (("1".equals(output.getCusStatus()) && "sap_cus"
-				.equals(fieldCategory))
-				|| ("1".equals(output.getSalYtdStatus()) && "sap_ytd"
-						.equals(fieldCategory))
-				|| ("1".equals(output.getSalMtdStatus()) && "sap_mtd"
-						.equals(fieldCategory))
-				|| ("1".equals(output.getSalClsStatus()) && "sap_cls"
-						.equals(fieldCategory))
-				|| ("1".equals(output.getFinStatus()) && "sap_fin"
-						.equals(fieldCategory))
-				|| ("1".equals(output.getIsNewAccount()) && "sap_acc"
-						.equals(fieldCategory))) {
-			value = method.invoke(output, new Object[] {});
-			if (value == null) {
-				value = "";
-			} else if (methodName.endsWith("Date")) {
-				value = DateUtil.format((String) value);
-			} else if (methodName.endsWith("Address")) {
-				value = value.toString().replace(',', '_').replace('"', '_')
-						.replace('，', '_').replace('\n', ' ').replace('\r', ' ');
-			}
-		}
+		Object value = method.invoke(history, new Object[] {});
 
 		csvFileOutputStream.write(DOUBLE_QUOTATION + value + DOUBLE_QUOTATION);
 		if (hasNextField)
 			csvFileOutputStream.write(COMMA);
 	}
 
-	public static File createEmptyOutputFile() {
-		File csvFile = new File(PropsUtil.getOutputUrI());
+	public static File createEmptyHistoryFile() {
+		File csvFile = new File(PropsUtil.getHistoryUrI());
 
 		File parent = csvFile.getParentFile();
 		if (parent != null && !parent.exists()) {

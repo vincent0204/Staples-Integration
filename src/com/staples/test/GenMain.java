@@ -19,10 +19,12 @@ public class GenMain {
 		boolean overwrite = true;
 		String genCfg = "/mbgConfiguration.xml";
 		File configFile = new File(GenMain.class.getResource(genCfg).getFile());
+		System.out.println(configFile);
 		ConfigurationParser cp = new ConfigurationParser(warnings);
 		Configuration config = null;
 		try {
 			config = cp.parseConfiguration(configFile);
+			System.out.println(config);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (XMLParserException e) {

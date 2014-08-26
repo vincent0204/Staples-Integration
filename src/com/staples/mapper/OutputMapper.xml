@@ -1,128 +1,132 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.staples.mapper.OutputMapper">
-	<resultMap id="BaseResultMap" type="com.staples.domain.Output">
-		<id column="ID" jdbcType="DECIMAL" property="id" />
-		<result column="CUSTOMER_TYPE" jdbcType="VARCHAR" property="customerType" />
-		<result column="BD_SALES" jdbcType="VARCHAR" property="bdSales" />
-		<result column="AM_SALES" jdbcType="VARCHAR" property="amSales" />
-		<result column="SAM_SALES" jdbcType="VARCHAR" property="samSales" />
-		<result column="TELEPHONIST" jdbcType="VARCHAR" property="telephonist" />
-		<result column="STATEMENT_PERSON" jdbcType="VARCHAR" property="statementPerson" />
-		<result column="IS_OBSOLETE" jdbcType="CHAR" property="isObsolete" />
-		<result column="FIRST_ORDER_DATE" jdbcType="DATE" property="firstOrderDate" />
-		<result column="LAST_ORDER_DATE" jdbcType="DATE" property="lastOrderDate" />
-		<result column="SAP_GROUP_NO" jdbcType="VARCHAR" property="sapGroupNo" />
-		<result column="SAP_REF_NO" jdbcType="VARCHAR" property="sapRefNo" />
-		<result column="TY_YTD_MARGIN" jdbcType="DECIMAL" property="tyYtdMargin" />
-		<result column="TY_YTD_SALES" jdbcType="DECIMAL" property="tyYtdSales" />
-		<result column="TY_YTD_ORDER_COUNT" jdbcType="DECIMAL"
-			property="tyYtdOrderCount" />
-		<result column="TY_YTD_MONTH_COUNT" jdbcType="DECIMAL"
-			property="tyYtdMonthCount" />
-		<result column="TY_MTD_MARGIN" jdbcType="DECIMAL" property="tyMtdMargin" />
-		<result column="TY_MTD_SALES" jdbcType="DECIMAL" property="tyMtdSales" />
-		<result column="TY_MTD_ORDER_COUNT" jdbcType="DECIMAL"
-			property="tyMtdOrderCount" />
-		<result column="LY_YTD_SALES" jdbcType="DECIMAL" property="lyYtdSales" />
-		<result column="BLY_YTD_SALES" jdbcType="DECIMAL" property="blyYtdSales" />
-		<result column="LY_YTD_MARGIN" jdbcType="DECIMAL" property="lyYtdMargin" />
-		<result column="BLY_YTD_MARGIN" jdbcType="DECIMAL" property="blyYtdMargin" />
-		<result column="LY_MTD_SALES" jdbcType="DECIMAL" property="lyMtdSales" />
-		<result column="BLY_MTD_SALES" jdbcType="DECIMAL" property="blyMtdSales" />
-		<result column="LY_MTD_MARGIN" jdbcType="DECIMAL" property="lyMtdMargin" />
-		<result column="BLY_MTD_MARGIN" jdbcType="DECIMAL" property="blyMtdMargin" />
-		<result column="TOTAL_AR" jdbcType="DECIMAL" property="totalAr" />
-		<result column="INVOICED_AR" jdbcType="DECIMAL" property="invoicedAr" />
-		<result column="UNINVOICED_AR" jdbcType="DECIMAL" property="uninvoicedAr" />
-		<result column="TOTAL_AR_OVERDUE" jdbcType="DECIMAL" property="totalArOverdue" />
-		<result column="INVOICED_AR_OVERDUE" jdbcType="DECIMAL"
-			property="invoicedArOverdue" />
-		<result column="UNINVOICED_AR_OVERDUE" jdbcType="DECIMAL"
-			property="uninvoicedArOverdue" />
-		<result column="TOTAL_CREDIT" jdbcType="DECIMAL" property="totalCredit" />
-		<result column="STATEMENT_IDENTIFICATION" jdbcType="VARCHAR"
-			property="statementIdentification" />
-		<result column="STATEMENT_IDENTIFICATION_FROM" jdbcType="VARCHAR"
-			property="statementIdentificationFrom" />
-		<result column="STATEMENT_IDENTIFICATION_TO" jdbcType="VARCHAR"
-			property="statementIdentificationTo" />
-		<result column="INVOICE_IDENTIFICATION" jdbcType="VARCHAR"
-			property="invoiceIdentification" />
-		<result column="PAYMENT_CONDITION" jdbcType="VARCHAR" property="paymentCondition" />
-		<result column="STATEMENT_DAY" jdbcType="DECIMAL" property="statementDay" />
-		<result column="STATEMENT_DAY_FROM" jdbcType="DECIMAL"
-			property="statementDayFrom" />
-		<result column="STATEMENT_DAY_TO" jdbcType="DECIMAL" property="statementDayTo" />
-		<result column="INVOICE_DAY" jdbcType="DECIMAL" property="invoiceDay" />
-		<result column="CUS_STATUS" jdbcType="CHAR" property="cusStatus" />
-		<result column="SAL_STATUS" jdbcType="CHAR" property="salStatus" />
-		<result column="FIN_STATUS" jdbcType="CHAR" property="finStatus" />
-		<result column="SALESFORCE_STATUS" jdbcType="CHAR" property="salesforceStatus" />
-		<result column="CUS_MODIFIED_DATE" jdbcType="TIMESTAMP"
-			property="cusModifiedDate" />
-		<result column="SAL_MODIFIED_DATE" jdbcType="TIMESTAMP"
-			property="salModifiedDate" />
-		<result column="FIN_MODIFIED_DATE" jdbcType="TIMESTAMP"
-			property="finModifiedDate" />
-		<result column="SALESFORCE_MODIFIED_DATE" jdbcType="TIMESTAMP"
-			property="salesforceModifiedDate" />
-		<result column="ACCOUNT_NAME" jdbcType="VARCHAR" property="accountName" />
-		<result column="PROVINCE_SEGMENT" jdbcType="VARCHAR" property="provinceSegment" />
-		<result column="CITY_SEGMENT" jdbcType="VARCHAR" property="citySegment" />
-		<result column="DISTRICT_SEGMENT" jdbcType="VARCHAR" property="districtSegment" />
-		<result column="PHONE" jdbcType="VARCHAR" property="phone" />
-		<result column="STAFF" jdbcType="DECIMAL" property="staff" />
-		<result column="INDUSTRY" jdbcType="VARCHAR" property="industry" />
-		<result column="ACCOUNT_SOURCE" jdbcType="VARCHAR" property="accountSource" />
-		<result column="SEGMENTATION" jdbcType="VARCHAR" property="segmentation" />
-		<result column="NATURE_OF_FIRM" jdbcType="VARCHAR" property="natureOfFirm" />
-		<result column="PURCHASE_TYPE" jdbcType="VARCHAR" property="purchaseType" />
-		<result column="IS_NEW_ACCOUNT" jdbcType="CHAR" property="isNewAccount" />
-	</resultMap>
-	<sql id="Base_Column_List">
-		ID, CUSTOMER_TYPE, BD_SALES, AM_SALES, SAM_SALES,
-		TELEPHONIST,
-		STATEMENT_PERSON,
-		IS_OBSOLETE, FIRST_ORDER_DATE,
-		LAST_ORDER_DATE, SAP_GROUP_NO, SAP_REF_NO,
-		TY_YTD_MARGIN,
-		TY_YTD_SALES,
-		TY_YTD_ORDER_COUNT, TY_YTD_MONTH_COUNT, TY_MTD_MARGIN, TY_MTD_SALES,
-		TY_MTD_ORDER_COUNT, LY_YTD_SALES, BLY_YTD_SALES, LY_YTD_MARGIN,
-		BLY_YTD_MARGIN, LY_MTD_SALES,
-		BLY_MTD_SALES, LY_MTD_MARGIN,
-		BLY_MTD_MARGIN, TOTAL_AR, INVOICED_AR, UNINVOICED_AR,
-		TOTAL_AR_OVERDUE, INVOICED_AR_OVERDUE, UNINVOICED_AR_OVERDUE,
-		TOTAL_CREDIT, STATEMENT_IDENTIFICATION,
-		STATEMENT_IDENTIFICATION_FROM,
-		STATEMENT_IDENTIFICATION_TO, INVOICE_IDENTIFICATION,
-		PAYMENT_CONDITION, STATEMENT_DAY, STATEMENT_DAY_FROM,
-		STATEMENT_DAY_TO, INVOICE_DAY,
-		CUS_STATUS, SAL_STATUS, FIN_STATUS,
-		SALESFORCE_STATUS, CUS_MODIFIED_DATE,
-		SAL_MODIFIED_DATE,
-		FIN_MODIFIED_DATE, SALESFORCE_MODIFIED_DATE, ACCOUNT_NAME,
-		PROVINCE_SEGMENT,
-		CITY_SEGMENT,
-		DISTRICT_SEGMENT, PHONE, STAFF,
-		INDUSTRY, ACCOUNT_SOURCE, SEGMENTATION, NATURE_OF_FIRM,
-		PURCHASE_TYPE,
-		IS_NEW_ACCOUNT
-	</sql>
-	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.staples.mapper.OutputMapper" >
+  <resultMap id="BaseResultMap" type="Output" >
+    <result column="SAP_REF_NO" property="sapRefNo" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_NAME" property="accountName" jdbcType="VARCHAR" />
+    <result column="PROVINCE_SEGMENT" property="provinceSegment" jdbcType="VARCHAR" />
+    <result column="CITY_SEGMENT" property="citySegment" jdbcType="VARCHAR" />
+    <result column="DISTRICT_SEGMENT" property="districtSegment" jdbcType="VARCHAR" />
+    <result column="PHONE" property="phone" jdbcType="VARCHAR" />
+    <result column="PHONE2" property="phone2" jdbcType="VARCHAR" />
+    <result column="STAFF" property="staff" jdbcType="DECIMAL" />
+    <result column="INDUSTRY" property="industry" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_SOURCE" property="accountSource" jdbcType="VARCHAR" />
+    <result column="PURCHASE_TYPE" property="purchaseType" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_TYPE" property="customerType" jdbcType="VARCHAR" />
+    <result column="BD_SALES" property="bdSales" jdbcType="VARCHAR" />
+    <result column="AM_SALES" property="amSales" jdbcType="VARCHAR" />
+    <result column="SAM_SALES" property="samSales" jdbcType="VARCHAR" />
+    <result column="TELEPHONIST" property="telephonist" jdbcType="VARCHAR" />
+    <result column="STATEMENT_PERSON" property="statementPerson" jdbcType="VARCHAR" />
+    <result column="IS_OBSOLETE" property="isObsolete" jdbcType="CHAR" />
+    <result column="FIRST_ORDER_DATE" property="firstOrderDate" jdbcType="VARCHAR" />
+    <result column="LAST_ORDER_DATE" property="lastOrderDate" jdbcType="VARCHAR" />
+    <result column="SAP_GROUP_NO" property="sapGroupNo" jdbcType="VARCHAR" />
+    <result column="TY_YTD_MARGIN" property="tyYtdMargin" jdbcType="DECIMAL" />
+    <result column="TY_YTD_SALES" property="tyYtdSales" jdbcType="DECIMAL" />
+    <result column="TY_YTD_ORDER_COUNT" property="tyYtdOrderCount" jdbcType="DECIMAL" />
+    <result column="TY_YTD_MONTH_COUNT" property="tyYtdMonthCount" jdbcType="DECIMAL" />
+    <result column="TY_MTD_MARGIN" property="tyMtdMargin" jdbcType="DECIMAL" />
+    <result column="TY_MTD_SALES" property="tyMtdSales" jdbcType="DECIMAL" />
+    <result column="TY_MTD_ORDER_COUNT" property="tyMtdOrderCount" jdbcType="DECIMAL" />
+    <result column="LY_YTD_SALES" property="lyYtdSales" jdbcType="DECIMAL" />
+    <result column="BLY_YTD_SALES" property="blyYtdSales" jdbcType="DECIMAL" />
+    <result column="LY_YTD_MARGIN" property="lyYtdMargin" jdbcType="DECIMAL" />
+    <result column="BLY_YTD_MARGIN" property="blyYtdMargin" jdbcType="DECIMAL" />
+    <result column="LY_MTD_SALES" property="lyMtdSales" jdbcType="DECIMAL" />
+    <result column="BLY_MTD_SALES" property="blyMtdSales" jdbcType="DECIMAL" />
+    <result column="LY_MTD_MARGIN" property="lyMtdMargin" jdbcType="DECIMAL" />
+    <result column="BLY_MTD_MARGIN" property="blyMtdMargin" jdbcType="DECIMAL" />
+    <result column="TOTAL_AR" property="totalAr" jdbcType="DECIMAL" />
+    <result column="INVOICED_AR" property="invoicedAr" jdbcType="DECIMAL" />
+    <result column="UNINVOICED_AR" property="uninvoicedAr" jdbcType="DECIMAL" />
+    <result column="TOTAL_AR_OVERDUE" property="totalArOverdue" jdbcType="DECIMAL" />
+    <result column="INVOICED_AR_OVERDUE" property="invoicedArOverdue" jdbcType="DECIMAL" />
+    <result column="UNINVOICED_AR_OVERDUE" property="uninvoicedArOverdue" jdbcType="DECIMAL" />
+    <result column="TOTAL_CREDIT" property="totalCredit" jdbcType="DECIMAL" />
+    <result column="STATEMENT_IDENTIFICATION" property="statementIdentification" jdbcType="VARCHAR" />
+    <result column="STATEMENT_IDENTIFICATION_FROM" property="statementIdentificationFrom" jdbcType="VARCHAR" />
+    <result column="STATEMENT_IDENTIFICATION_TO" property="statementIdentificationTo" jdbcType="VARCHAR" />
+    <result column="INVOICE_IDENTIFICATION" property="invoiceIdentification" jdbcType="VARCHAR" />
+    <result column="PAYMENT_CONDITION" property="paymentCondition" jdbcType="VARCHAR" />
+    <result column="STATEMENT_DAY" property="statementDay" jdbcType="DECIMAL" />
+    <result column="STATEMENT_DAY_FROM" property="statementDayFrom" jdbcType="DECIMAL" />
+    <result column="STATEMENT_DAY_TO" property="statementDayTo" jdbcType="DECIMAL" />
+    <result column="INVOICE_DAY" property="invoiceDay" jdbcType="DECIMAL" />
+    <result column="INSTA_AND_WARR_YTD_SALES" property="instaAndWarrYtdSales" jdbcType="DECIMAL" />
+    <result column="OFFI_FURNI_YTD_SALES" property="offiFurniYtdSales" jdbcType="DECIMAL" />
+    <result column="OFFI_STATIO_YTD_SALES" property="offiStatioYtdSales" jdbcType="DECIMAL" />
+    <result column="COMPUT_AND_ACCESS_YTD_SALES" property="computAndAccessYtdSales" jdbcType="DECIMAL" />
+    <result column="RETAIL_STORES_AND_SUPPL" property="retailStoresAndSuppl" jdbcType="DECIMAL" />
+    <result column="BUSINESS_SERV_YTD_SALES" property="businessServYtdSales" jdbcType="DECIMAL" />
+    <result column="COMMERC_EQUIP_YTD_SALES" property="commercEquipYtdSales" jdbcType="DECIMAL" />
+    <result column="PP_FOOANDHOUSGS_YTD_SALES" property="ppFooandhousgsYtdSales" jdbcType="DECIMAL" />
+    <result column="SPEC_NOCODSUPPL_YTD_SALES" property="specNocodsupplYtdSales" jdbcType="DECIMAL" />
+    <result column="LY_INSTA_AND_WARR_YTD_SALES" property="lyInstaAndWarrYtdSales" jdbcType="DECIMAL" />
+    <result column="LY_OFFI_FURNI_YTD_SALES" property="lyOffiFurniYtdSales" jdbcType="DECIMAL" />
+    <result column="LY_OFFI_STATIO_YTD_SALES" property="lyOffiStatioYtdSales" jdbcType="DECIMAL" />
+    <result column="LY_COMPUT_AND_ACC_YTD_SALES" property="lyComputAndAccYtdSales" jdbcType="DECIMAL" />
+    <result column="LY_RETAIL_STORES_AND_SUPPL" property="lyRetailStoresAndSuppl" jdbcType="DECIMAL" />
+    <result column="LY_BUSINESS_SERV_YTD_SALES" property="lyBusinessServYtdSales" jdbcType="DECIMAL" />
+    <result column="LY_COMMERC_EQUIP_YTD_SALES" property="lyCommercEquipYtdSales" jdbcType="DECIMAL" />
+    <result column="LY_PP_FOOANDHOUSGS_YTD_SALES" property="lyPpFooandhousgsYtdSales" jdbcType="DECIMAL" />
+    <result column="LY_SPEC_NOCODSUPPL_YTD_SALES" property="lySpecNocodsupplYtdSales" jdbcType="DECIMAL" />
+    <result column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="CUS_MODIFIED_DATE" property="cusModifiedDate" jdbcType="VARCHAR" />
+    <result column="SAL_YTD_MODIFIED_DATE" property="salYtdModifiedDate" jdbcType="VARCHAR" />
+    <result column="SAL_MTD_MODIFIED_DATE" property="salMtdModifiedDate" jdbcType="VARCHAR" />
+    <result column="SAL_CLS_MODIFIED_DATE" property="salClsModifiedDate" jdbcType="VARCHAR" />
+    <result column="FIN_MODIFIED_DATE" property="finModifiedDate" jdbcType="VARCHAR" />
+    <result column="SALESFORCE_MODIFIED_DATE" property="salesforceModifiedDate" jdbcType="VARCHAR" />
+    <result column="IS_NEW_ACCOUNT" property="isNewAccount" jdbcType="CHAR" />
+    <result column="CUS_STATUS" property="cusStatus" jdbcType="CHAR" />
+    <result column="SAL_YTD_STATUS" property="salYtdStatus" jdbcType="CHAR" />
+    <result column="SAL_MTD_STATUS" property="salMtdStatus" jdbcType="CHAR" />
+    <result column="SAL_CLS_STATUS" property="salClsStatus" jdbcType="CHAR" />
+    <result column="FIN_STATUS" property="finStatus" jdbcType="CHAR" />
+    <result column="SALESFORCE_STATUS" property="salesforceStatus" jdbcType="CHAR" />
+    <result column="BILLING_ADDRESS" property="billingAddress" jdbcType="VARCHAR" />
+  </resultMap>
+ 
+  <sql id="Base_Column_List" >
+    SAP_REF_NO, ACCOUNT_NAME, PROVINCE_SEGMENT, CITY_SEGMENT, DISTRICT_SEGMENT, PHONE, 
+    PHONE2, STAFF, INDUSTRY, ACCOUNT_SOURCE, PURCHASE_TYPE, CUSTOMER_TYPE, BD_SALES, 
+    AM_SALES, SAM_SALES, TELEPHONIST, STATEMENT_PERSON, IS_OBSOLETE, FIRST_ORDER_DATE, 
+    LAST_ORDER_DATE, SAP_GROUP_NO, TY_YTD_MARGIN, TY_YTD_SALES, TY_YTD_ORDER_COUNT, TY_YTD_MONTH_COUNT, 
+    TY_MTD_MARGIN, TY_MTD_SALES, TY_MTD_ORDER_COUNT, LY_YTD_SALES, BLY_YTD_SALES, LY_YTD_MARGIN, 
+    BLY_YTD_MARGIN, LY_MTD_SALES, BLY_MTD_SALES, LY_MTD_MARGIN, BLY_MTD_MARGIN, TOTAL_AR, 
+    INVOICED_AR, UNINVOICED_AR, TOTAL_AR_OVERDUE, INVOICED_AR_OVERDUE, UNINVOICED_AR_OVERDUE, 
+    TOTAL_CREDIT, STATEMENT_IDENTIFICATION, STATEMENT_IDENTIFICATION_FROM, STATEMENT_IDENTIFICATION_TO, 
+    INVOICE_IDENTIFICATION, PAYMENT_CONDITION, STATEMENT_DAY, STATEMENT_DAY_FROM, STATEMENT_DAY_TO, 
+    INVOICE_DAY, INSTA_AND_WARR_YTD_SALES, OFFI_FURNI_YTD_SALES, OFFI_STATIO_YTD_SALES, 
+    COMPUT_AND_ACCESS_YTD_SALES, RETAIL_STORES_AND_SUPPL, BUSINESS_SERV_YTD_SALES, COMMERC_EQUIP_YTD_SALES, 
+    PP_FOOANDHOUSGS_YTD_SALES, SPEC_NOCODSUPPL_YTD_SALES, LY_INSTA_AND_WARR_YTD_SALES, 
+    LY_OFFI_FURNI_YTD_SALES, LY_OFFI_STATIO_YTD_SALES, LY_COMPUT_AND_ACC_YTD_SALES, LY_RETAIL_STORES_AND_SUPPL, 
+    LY_BUSINESS_SERV_YTD_SALES, LY_COMMERC_EQUIP_YTD_SALES, LY_PP_FOOANDHOUSGS_YTD_SALES, 
+    LY_SPEC_NOCODSUPPL_YTD_SALES, ID, CUS_MODIFIED_DATE, SAL_YTD_MODIFIED_DATE, SAL_MTD_MODIFIED_DATE, 
+    SAL_CLS_MODIFIED_DATE, FIN_MODIFIED_DATE, SALESFORCE_MODIFIED_DATE, IS_NEW_ACCOUNT, 
+    CUS_STATUS, SAL_YTD_STATUS, SAL_MTD_STATUS, SAL_CLS_STATUS, FIN_STATUS, SALESFORCE_STATUS, 
+    BILLING_ADDRESS
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.math.BigDecimal">
 		select
 		<include refid="Base_Column_List" />
-		from OUTPUT
+		from SALESFORCE.OUTPUT
 		where ID = #{id,jdbcType=DECIMAL}
 	</select>
 
 	<select id="getAllUpdatedInfo" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
-		from OUTPUT
-		where SALESFORCE_STATUS = 'N'
+		from SALESFORCE.OUTPUT
+	</select>
+	
+	<select id="getCountOfUpdatedInfo" resultType="Integer">
+		select count(1)	
+		from SALESFORCE.OUTPUT
 	</select>
 
 	<parameterMap type="map" id="theSumParameterMap">
@@ -134,10 +138,10 @@
 	</update>
 
 	<update id="updateOutputStatusN" parameterType="Output"> 
-		UPDATE OUTPUT SET SALESFORCE_STATUS = 'N', CUS_STATUS = 'N', SAL_STATUS = 'N', FIN_STATUS = 'N'
+		UPDATE SALESFORCE.OUTPUT SET SALESFORCE_STATUS = '0', CUS_STATUS = '0', SAL_STATUS = '0', FIN_STATUS = '0'
 	</update>
 
 	<update id="updateOutputStatusY" parameterType="Output"> 
-		UPDATE OUTPUT SET SALESFORCE_STATUS = 'Y', CUS_STATUS = 'Y', SAL_STATUS = 'Y', FIN_STATUS = 'Y', SALESFORCE_MODIFIED_DATE = SYSDATE
+		UPDATE SALESFORCE.OUTPUT SET SALESFORCE_STATUS = '1', CUS_STATUS = '1', SAL_STATUS = '1', FIN_STATUS = '1', SALESFORCE_MODIFIED_DATE = SYSDATE
 	</update>
 </mapper>

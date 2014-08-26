@@ -35,6 +35,15 @@ public class DateUtil {
 		return sb.toString();
 	}
 	
+	public static String format(String date){
+		StringBuilder sb = new StringBuilder();
+		sb.append(date.substring(0, 4));
+		sb.append("-").append(date.substring(4, 6));
+		sb.append("-").append(date.substring(6));
+		
+		return sb.toString();
+	}
+	
 	public static long timestamp() {
 		return new Date().getTime();
 	}

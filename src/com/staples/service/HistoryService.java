@@ -13,13 +13,13 @@ import com.sforce.async.BatchInfo;
 import com.sforce.async.JobInfo;
 import com.sforce.async.OperationEnum;
 import com.staples.bulk.BulkUtil;
-import com.staples.domain.Output;
-import com.staples.mapper.OutputMapper;
-import com.staples.util.CsvUtil;
+import com.staples.domain.History;
+import com.staples.mapper.HistoryMapper;
+import com.staples.util.CsvHistoryUtil;
 import com.staples.util.MyBatisSqlSessionFactory;
 import com.staples.util.PropsUtil;
 
-public class OutputService {
+public class HistoryService {
 	private static Logger logger = Logger.getLogger(OutputService.class);
 	private static BulkUtil bulkUtil;
 	private static SqlSession session;
@@ -30,10 +30,6 @@ public class OutputService {
 				PropsUtil.SF_SERVER.getProperty("staples.full.password"),
 				PropsUtil.SF_SERVER.getProperty("staples.full.url"));
 		session = MyBatisSqlSessionFactory.openSession();
-	}
-	
-	public static void main(String[] args) {
-		new OutputService().syncInformation();
 	}
 	
 	public void salesforceSync(){
@@ -49,29 +45,29 @@ public class OutputService {
 			SqlSession session = MyBatisSqlSessionFactory.openSession();
 			logger.info("OpenSession --> Database Environment: "
 					+ session.getConfiguration().getEnvironment().getId());
-			OutputMapper outputMapper = session.getMapper(OutputMapper.class);
+			HistoryMapper historyMapper = session.getMapper(HistoryMapper.class);
 			
-			int cntOfRecords = outputMapper.getCountOfUpdatedInfo();
+			int cntOfRecords = historyMapper.getCountOfInsertedInfo();
 			logger.info("count of total exportData: " + cntOfRecords);
 			
-			int offset =0 , limit = 2500;
+//			cntOfRecords = 200;
+			int offset =0 , limit = 10000;
 			
 			long totalStartTime = new Date().getTime();
-			JobInfo job = bulkUtil.createJob("Account", OperationEnum.upsert);
+			JobInfo job = bulkUtil.createJob("SAP_Sales_Margin_History__c", OperationEnum.insert);
 			List<BatchInfo> batchInfoList = new ArrayList<BatchInfo>();
 			
 			for (; offset < cntOfRecords; offset = offset + limit) {
 				long startTime = new Date().getTime();
-				File csvFile = CsvUtil.createEmptyOutputFile();
+				File csvFile = CsvHistoryUtil.createEmptyHistoryFile();
 				logger.info("Output csvFile: " + csvFile.getAbsolutePath());
 				
 				RowBounds rowBounds = new RowBounds(offset, limit);
-				List<Output> exportData = outputMapper.getAllUpdatedInfo(rowBounds);
+				List<History> exportData = historyMapper.getAllInsertedInfo(rowBounds);
 				logger.info("Data offset: " + offset + ", batch count of exportData: " + exportData.size());
-				CsvUtil.createCSVFile(exportData, PropsUtil.FIELDS_MAPPING, csvFile);
+				CsvHistoryUtil.createCSVFile(exportData, PropsUtil.HISTORY_MAPPING, csvFile);
 				
 				batchInfoList.addAll(bulkUtil.createBatchesFromCSVFile(job, csvFile.getAbsolutePath()));
-//				bulkUtil.runJob("Account", OperationEnum.upsert, PropsUtil.getOutputUrI());
 				
 				long endTime = new Date().getTime();
 				logger.info("Round Used Time: " + (endTime - startTime) + " millis");
@@ -87,21 +83,5 @@ public class OutputService {
 		} finally {
 			session.close();
 		}
-	}
-
-	void updateOutputStatusY(){
-		SqlSession session = MyBatisSqlSessionFactory.openSession();
-		OutputMapper outputMapper = session.getMapper(OutputMapper.class);
-		int noOfRowsUpdated = outputMapper.updateOutputStatusY();
-		session.commit();
-		logger.info("update output status Y : " + noOfRowsUpdated);
-	}
-
-	public void updateOutputStatusN() {
-		SqlSession session = MyBatisSqlSessionFactory.openSession();
-		OutputMapper outputMapper = session.getMapper(OutputMapper.class);
-		int noOfRowsUpdated = outputMapper.updateOutputStatusN();
-		session.commit();
-		logger.info("update output status N : " + noOfRowsUpdated);
 	}
 }

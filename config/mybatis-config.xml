@@ -8,9 +8,10 @@
 		<property name="jdbc.password" value="verysecurepwd" /> -->
 	</properties>
 	<typeAliases>
-		<package name="com.staples.domain"/>
+		<typeAlias alias="Output" type="com.staples.domain.Output"/>
+		<typeAlias alias="History" type="com.staples.domain.History"/>
 	</typeAliases>
-	<environments default="oracle-dev">
+	<environments default="oracle-prod">
 		<environment id="mysql-dev">
 			<transactionManager type="JDBC" />
 			<dataSource type="UNPOOLED">
@@ -41,5 +42,6 @@
 	</environments>
 	<mappers>
 		<mapper resource="com/staples/mapper/OutputMapper.xml" />
+		<mapper resource="com/staples/mapper/HistoryMapper.xml" />
 	</mappers>
 </configuration>

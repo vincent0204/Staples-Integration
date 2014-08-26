@@ -19,7 +19,7 @@
   
     <!-- 数据库连接 -->
     <jdbcConnection driverClass="oracle.jdbc.OracleDriver"
-        connectionURL="jdbc:oracle:thin:@192.168.1.135:1521:orcl"
+        connectionURL="jdbc:oracle:thin:@192.168.1.131:1521:orcl"
         userId="scott"
         password="tiger">
     </jdbcConnection>
@@ -45,9 +45,9 @@
     </javaClientGenerator>
     
     <!-- 要对那些数据表进行生成操作，必须要有一个. -->
-    <table schema="scott" tableName="output" domainObjectName="Output" 
+    <table schema="sys" tableName="HIS_FY" domainObjectName="History" 
         enableCountByExample="false" enableUpdateByExample="false"
-        enableDeleteByExample="false" enableSelectByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="true"
         selectByExampleQueryId="false">     
     </table>
 

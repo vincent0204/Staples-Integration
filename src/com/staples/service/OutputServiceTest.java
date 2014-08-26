@@ -1,14 +1,10 @@
 package com.staples.service;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Test;
 
-import com.sforce.async.AsyncApiException;
-import com.sforce.ws.ConnectionException;
 import com.staples.util.PropsUtil;
 
 public class OutputServiceTest {
@@ -25,18 +21,14 @@ public class OutputServiceTest {
 		outputService = null;
 	}
 
-	@Test
-	public void testGenerateCsvFile(){
-		outputService.generateCVSfile();
+//	@Test
+	public void testSyncInformation(){
+		outputService.syncInformation();
 	}
 	
 //	@Test
-	public void testSendInformationToSalesforce() throws ConnectionException, AsyncApiException, IOException{
-		outputService.sendInformationToSalesforce(
-				PropsUtil.SF_SERVER.getProperty("staples.test.username"), 
-				PropsUtil.SF_SERVER.getProperty("staples.test.password"),
-				PropsUtil.SF_SERVER.getProperty("staples.test.url")
-				);
+	public void testSalesforceSync(){
+		outputService.salesforceSync();
 	}
 	
 //	@Test

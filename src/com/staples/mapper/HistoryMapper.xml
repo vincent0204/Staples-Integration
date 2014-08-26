@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.staples.mapper.HistoryMapper" >
+  <resultMap id="BaseResultMap" type="History" >
+    <result column="SAP_REF_NO" property="sapRefNo" jdbcType="VARCHAR" />
+    <result column="SF_ID" property="sfId" jdbcType="VARCHAR" />
+    <result column="YEAR" property="year" jdbcType="VARCHAR" />
+    <result column="SALE" property="sale" jdbcType="DECIMAL" />
+    <result column="MARGIN" property="margin" jdbcType="DECIMAL" />
+    <result column="JAN_SALES" property="janSales" jdbcType="DECIMAL" />
+    <result column="FEB_SALES" property="febSales" jdbcType="DECIMAL" />
+    <result column="MAR_SALES" property="marSales" jdbcType="DECIMAL" />
+    <result column="APR_SALES" property="aprSales" jdbcType="DECIMAL" />
+    <result column="MAY_SALES" property="maySales" jdbcType="DECIMAL" />
+    <result column="JUN_SALES" property="junSales" jdbcType="DECIMAL" />
+    <result column="JUL_SALES" property="julSales" jdbcType="DECIMAL" />
+    <result column="AUG_SALES" property="augSales" jdbcType="DECIMAL" />
+    <result column="SEP_SALES" property="sepSales" jdbcType="DECIMAL" />
+    <result column="OCT_SALES" property="octSales" jdbcType="DECIMAL" />
+    <result column="NOV_SALES" property="novSales" jdbcType="DECIMAL" />
+    <result column="DEC_SALES" property="decSales" jdbcType="DECIMAL" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    SAP_REF_NO, SF_ID, YEAR, SALE, MARGIN, JAN_SALES, FEB_SALES, MAR_SALES, APR_SALES, 
+    MAY_SALES, JUN_SALES, JUL_SALES, AUG_SALES, SEP_SALES, OCT_SALES, NOV_SALES, DEC_SALES
+  </sql>
+  
+  <select id="getAllInsertedInfo" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from SYS.HIS_FY
+	</select>
+	
+	<select id="getCountOfInsertedInfo" resultType="Integer">
+		select count(1)	
+		from SYS.HIS_FY
+	</select>
+</mapper>

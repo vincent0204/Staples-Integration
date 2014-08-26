@@ -27,11 +27,10 @@ import com.sforce.async.OperationEnum;
 import com.sforce.soap.partner.PartnerConnection;
 import com.sforce.ws.ConnectionException;
 import com.sforce.ws.ConnectorConfig;
-import com.staples.util.PropsUtil;
 
 public class BulkUtil {
 	
-	private static final String SAP_EXTERNAL_FIELD = "SAP_CUS_SAP_Ref_No__c";
+	private static final String SAP_EXTERNAL_FIELD = "SAP_Number__c";//SAP_Number__c
 	private static final int MAX_BYTES_PER_BATCH = 5000000;
 	private static final int MAX_ROWS_PER_BATCH = 5000;
 	private static final String LINE_END = "\n";
@@ -41,27 +40,30 @@ public class BulkUtil {
 	
 	private BulkConnection connection;
 
-	public BulkUtil(String userName, String password, String url) throws ConnectionException, AsyncApiException {
-		connection = this.getBulkConnection(userName, password, url);
+	public BulkUtil(String userName, String password, String url){
+		try {
+			connection = this.getBulkConnection(userName, password, url);
+		} catch (Exception e) {
+			logger.info(e.getMessage());
+		} 
 	}
 
 	/**
 	 * Creates a Bulk API job and uploads batches for a CSV file.
 	 */
-	public boolean runJob(String sobjectType, OperationEnum operation) throws AsyncApiException,
+	public boolean runJob(String sobjectType, OperationEnum operation, String file) throws AsyncApiException,
 			ConnectionException, IOException {
 		JobInfo job = createJob(sobjectType, operation);
-		List<BatchInfo> batchInfoList = createBatchesFromCSVFile(connection, job, PropsUtil.getOutputUrI());
-		closeJob(connection, job.getId());
-		awaitCompletion(connection, job, batchInfoList);
-		return checkResults(connection, job, batchInfoList);
+		List<BatchInfo> batchInfoList = createBatchesFromCSVFile(job, file);
+		closeJob(job.getId());
+		awaitCompletion(job, batchInfoList);
+		return checkResults(job, batchInfoList);
 	}
 
 	/**
 	 * Gets the results of the operation and checks for errors.
 	 */
-	private boolean checkResults(BulkConnection connection, JobInfo job,
-			List<BatchInfo> batchInfoList) throws AsyncApiException,
+	public boolean checkResults(JobInfo job, List<BatchInfo> batchInfoList) throws AsyncApiException,
 			IOException {
 		
 		boolean isSuccess = true;
@@ -93,7 +95,7 @@ public class BulkUtil {
 		return isSuccess;
 	}
 
-	private void closeJob(BulkConnection connection, String jobId)
+	public void closeJob(String jobId)
 			throws AsyncApiException {
 		JobInfo job = new JobInfo();
 		job.setId(jobId);
@@ -112,8 +114,7 @@ public class BulkUtil {
 	 *            List of batches for this job.
 	 * @throws AsyncApiException
 	 */
-	private void awaitCompletion(BulkConnection connection, JobInfo job,
-			List<BatchInfo> batchInfoList) throws AsyncApiException {
+	public void awaitCompletion(JobInfo job, List<BatchInfo> batchInfoList) throws AsyncApiException {
 		long sleepTime = 0L;
 		Set<String> incomplete = new HashSet<String>();
 		for (BatchInfo bi : batchInfoList) {
@@ -149,7 +150,7 @@ public class BulkUtil {
 	 * @return The JobInfo for the new job.
 	 * @throws AsyncApiException
 	 */
-	private JobInfo createJob(String sobjectType, OperationEnum operation)
+	public JobInfo createJob(String sobjectType, OperationEnum operation)
 			throws AsyncApiException {
 		JobInfo job = new JobInfo();
 		job.setObject(sobjectType);
@@ -212,8 +213,7 @@ public class BulkUtil {
 	 * @param csvFileName
 	 *            The source file for batch data
 	 */
-	private List<BatchInfo> createBatchesFromCSVFile(BulkConnection connection,
-			JobInfo jobInfo, String csvFileName) throws IOException,
+	public List<BatchInfo> createBatchesFromCSVFile(JobInfo jobInfo, String csvFileName) throws IOException,
 			AsyncApiException {
 		List<BatchInfo> batchInfos = new ArrayList<BatchInfo>();
 		BufferedReader rdr = new BufferedReader(new InputStreamReader(
@@ -286,7 +286,7 @@ public class BulkUtil {
 		try {
 			BatchInfo batchInfo = connection.createBatchFromStream(jobInfo,
 					tmpInputStream);
-			logger.debug(batchInfo);
+			logger.info(batchInfo);
 			batchInfos.add(batchInfo);
 		} finally {
 			tmpInputStream.close();

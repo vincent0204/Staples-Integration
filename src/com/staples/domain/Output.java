@@ -1,10 +1,29 @@
 package com.staples.domain;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 public class Output {
-    private BigDecimal id;
+    private String sapRefNo;
+
+    private String accountName;
+
+    private String provinceSegment;
+
+    private String citySegment;
+
+    private String districtSegment;
+
+    private String phone;
+
+    private String phone2;
+
+    private BigDecimal staff;
+
+    private String industry;
+
+    private String accountSource;
+
+    private String purchaseType;
 
     private String customerType;
 
@@ -20,13 +39,11 @@ public class Output {
 
     private String isObsolete;
 
-    private Date firstOrderDate;
+    private String firstOrderDate;
 
-    private Date lastOrderDate;
+    private String lastOrderDate;
 
     private String sapGroupNo;
-
-    private String sapRefNo;
 
     private BigDecimal tyYtdMargin;
 
@@ -90,52 +107,158 @@ public class Output {
 
     private BigDecimal invoiceDay;
 
+    private BigDecimal instaAndWarrYtdSales;
+
+    private BigDecimal offiFurniYtdSales;
+
+    private BigDecimal offiStatioYtdSales;
+
+    private BigDecimal computAndAccessYtdSales;
+
+    private BigDecimal retailStoresAndSuppl;
+
+    private BigDecimal businessServYtdSales;
+
+    private BigDecimal commercEquipYtdSales;
+
+    private BigDecimal ppFooandhousgsYtdSales;
+
+    private BigDecimal specNocodsupplYtdSales;
+
+    private BigDecimal lyInstaAndWarrYtdSales;
+
+    private BigDecimal lyOffiFurniYtdSales;
+
+    private BigDecimal lyOffiStatioYtdSales;
+
+    private BigDecimal lyComputAndAccYtdSales;
+
+    private BigDecimal lyRetailStoresAndSuppl;
+
+    private BigDecimal lyBusinessServYtdSales;
+
+    private BigDecimal lyCommercEquipYtdSales;
+
+    private BigDecimal lyPpFooandhousgsYtdSales;
+
+    private BigDecimal lySpecNocodsupplYtdSales;
+
+    private BigDecimal id;
+
+    private String cusModifiedDate;
+
+    private String salYtdModifiedDate;
+
+    private String salMtdModifiedDate;
+
+    private String salClsModifiedDate;
+
+    private String finModifiedDate;
+
+    private String salesforceModifiedDate;
+
+    private String isNewAccount;
+
     private String cusStatus;
 
-    private String salStatus;
+    private String salYtdStatus;
+
+    private String salMtdStatus;
+
+    private String salClsStatus;
 
     private String finStatus;
 
     private String salesforceStatus;
 
-    private Date cusModifiedDate;
+    private String billingAddress;
 
-    private Date salModifiedDate;
-
-    private Date finModifiedDate;
-
-    private Date salesforceModifiedDate;
-
-    private String accountName;
-
-    private String provinceSegment;
-
-    private String citySegment;
-
-    private String districtSegment;
-
-    private String phone;
-
-    private BigDecimal staff;
-
-    private String industry;
-
-    private String accountSource;
-
-    private String segmentation;
-
-    private String natureOfFirm;
-
-    private String purchaseType;
-
-    private String isNewAccount;
-
-    public BigDecimal getId() {
-        return id;
+    public String getSapRefNo() {
+        return sapRefNo;
     }
 
-    public void setId(BigDecimal id) {
-        this.id = id;
+    public void setSapRefNo(String sapRefNo) {
+        this.sapRefNo = sapRefNo == null ? null : sapRefNo.trim();
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName == null ? null : accountName.trim();
+    }
+
+    public String getProvinceSegment() {
+        return provinceSegment;
+    }
+
+    public void setProvinceSegment(String provinceSegment) {
+        this.provinceSegment = provinceSegment == null ? null : provinceSegment.trim();
+    }
+
+    public String getCitySegment() {
+        return citySegment;
+    }
+
+    public void setCitySegment(String citySegment) {
+        this.citySegment = citySegment == null ? null : citySegment.trim();
+    }
+
+    public String getDistrictSegment() {
+        return districtSegment;
+    }
+
+    public void setDistrictSegment(String districtSegment) {
+        this.districtSegment = districtSegment == null ? null : districtSegment.trim();
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone == null ? null : phone.trim();
+    }
+
+    public String getPhone2() {
+        return phone2;
+    }
+
+    public void setPhone2(String phone2) {
+        this.phone2 = phone2 == null ? null : phone2.trim();
+    }
+
+    public BigDecimal getStaff() {
+        return staff;
+    }
+
+    public void setStaff(BigDecimal staff) {
+        this.staff = staff;
+    }
+
+    public String getIndustry() {
+        return industry;
+    }
+
+    public void setIndustry(String industry) {
+        this.industry = industry == null ? null : industry.trim();
+    }
+
+    public String getAccountSource() {
+        return accountSource;
+    }
+
+    public void setAccountSource(String accountSource) {
+        this.accountSource = accountSource == null ? null : accountSource.trim();
+    }
+
+    public String getPurchaseType() {
+        return purchaseType;
+    }
+
+    public void setPurchaseType(String purchaseType) {
+        this.purchaseType = purchaseType == null ? null : purchaseType.trim();
     }
 
     public String getCustomerType() {
@@ -194,20 +317,20 @@ public class Output {
         this.isObsolete = isObsolete == null ? null : isObsolete.trim();
     }
 
-    public Date getFirstOrderDate() {
+    public String getFirstOrderDate() {
         return firstOrderDate;
     }
 
-    public void setFirstOrderDate(Date firstOrderDate) {
-        this.firstOrderDate = firstOrderDate;
+    public void setFirstOrderDate(String firstOrderDate) {
+        this.firstOrderDate = firstOrderDate == null ? null : firstOrderDate.trim();
     }
 
-    public Date getLastOrderDate() {
+    public String getLastOrderDate() {
         return lastOrderDate;
     }
 
-    public void setLastOrderDate(Date lastOrderDate) {
-        this.lastOrderDate = lastOrderDate;
+    public void setLastOrderDate(String lastOrderDate) {
+        this.lastOrderDate = lastOrderDate == null ? null : lastOrderDate.trim();
     }
 
     public String getSapGroupNo() {
@@ -216,14 +339,6 @@ public class Output {
 
     public void setSapGroupNo(String sapGroupNo) {
         this.sapGroupNo = sapGroupNo == null ? null : sapGroupNo.trim();
-    }
-
-    public String getSapRefNo() {
-        return sapRefNo;
-    }
-
-    public void setSapRefNo(String sapRefNo) {
-        this.sapRefNo = sapRefNo == null ? null : sapRefNo.trim();
     }
 
     public BigDecimal getTyYtdMargin() {
@@ -474,6 +589,214 @@ public class Output {
         this.invoiceDay = invoiceDay;
     }
 
+    public BigDecimal getInstaAndWarrYtdSales() {
+        return instaAndWarrYtdSales;
+    }
+
+    public void setInstaAndWarrYtdSales(BigDecimal instaAndWarrYtdSales) {
+        this.instaAndWarrYtdSales = instaAndWarrYtdSales;
+    }
+
+    public BigDecimal getOffiFurniYtdSales() {
+        return offiFurniYtdSales;
+    }
+
+    public void setOffiFurniYtdSales(BigDecimal offiFurniYtdSales) {
+        this.offiFurniYtdSales = offiFurniYtdSales;
+    }
+
+    public BigDecimal getOffiStatioYtdSales() {
+        return offiStatioYtdSales;
+    }
+
+    public void setOffiStatioYtdSales(BigDecimal offiStatioYtdSales) {
+        this.offiStatioYtdSales = offiStatioYtdSales;
+    }
+
+    public BigDecimal getComputAndAccessYtdSales() {
+        return computAndAccessYtdSales;
+    }
+
+    public void setComputAndAccessYtdSales(BigDecimal computAndAccessYtdSales) {
+        this.computAndAccessYtdSales = computAndAccessYtdSales;
+    }
+
+    public BigDecimal getRetailStoresAndSuppl() {
+        return retailStoresAndSuppl;
+    }
+
+    public void setRetailStoresAndSuppl(BigDecimal retailStoresAndSuppl) {
+        this.retailStoresAndSuppl = retailStoresAndSuppl;
+    }
+
+    public BigDecimal getBusinessServYtdSales() {
+        return businessServYtdSales;
+    }
+
+    public void setBusinessServYtdSales(BigDecimal businessServYtdSales) {
+        this.businessServYtdSales = businessServYtdSales;
+    }
+
+    public BigDecimal getCommercEquipYtdSales() {
+        return commercEquipYtdSales;
+    }
+
+    public void setCommercEquipYtdSales(BigDecimal commercEquipYtdSales) {
+        this.commercEquipYtdSales = commercEquipYtdSales;
+    }
+
+    public BigDecimal getPpFooandhousgsYtdSales() {
+        return ppFooandhousgsYtdSales;
+    }
+
+    public void setPpFooandhousgsYtdSales(BigDecimal ppFooandhousgsYtdSales) {
+        this.ppFooandhousgsYtdSales = ppFooandhousgsYtdSales;
+    }
+
+    public BigDecimal getSpecNocodsupplYtdSales() {
+        return specNocodsupplYtdSales;
+    }
+
+    public void setSpecNocodsupplYtdSales(BigDecimal specNocodsupplYtdSales) {
+        this.specNocodsupplYtdSales = specNocodsupplYtdSales;
+    }
+
+    public BigDecimal getLyInstaAndWarrYtdSales() {
+        return lyInstaAndWarrYtdSales;
+    }
+
+    public void setLyInstaAndWarrYtdSales(BigDecimal lyInstaAndWarrYtdSales) {
+        this.lyInstaAndWarrYtdSales = lyInstaAndWarrYtdSales;
+    }
+
+    public BigDecimal getLyOffiFurniYtdSales() {
+        return lyOffiFurniYtdSales;
+    }
+
+    public void setLyOffiFurniYtdSales(BigDecimal lyOffiFurniYtdSales) {
+        this.lyOffiFurniYtdSales = lyOffiFurniYtdSales;
+    }
+
+    public BigDecimal getLyOffiStatioYtdSales() {
+        return lyOffiStatioYtdSales;
+    }
+
+    public void setLyOffiStatioYtdSales(BigDecimal lyOffiStatioYtdSales) {
+        this.lyOffiStatioYtdSales = lyOffiStatioYtdSales;
+    }
+
+    public BigDecimal getLyComputAndAccYtdSales() {
+        return lyComputAndAccYtdSales;
+    }
+
+    public void setLyComputAndAccYtdSales(BigDecimal lyComputAndAccYtdSales) {
+        this.lyComputAndAccYtdSales = lyComputAndAccYtdSales;
+    }
+
+    public BigDecimal getLyRetailStoresAndSuppl() {
+        return lyRetailStoresAndSuppl;
+    }
+
+    public void setLyRetailStoresAndSuppl(BigDecimal lyRetailStoresAndSuppl) {
+        this.lyRetailStoresAndSuppl = lyRetailStoresAndSuppl;
+    }
+
+    public BigDecimal getLyBusinessServYtdSales() {
+        return lyBusinessServYtdSales;
+    }
+
+    public void setLyBusinessServYtdSales(BigDecimal lyBusinessServYtdSales) {
+        this.lyBusinessServYtdSales = lyBusinessServYtdSales;
+    }
+
+    public BigDecimal getLyCommercEquipYtdSales() {
+        return lyCommercEquipYtdSales;
+    }
+
+    public void setLyCommercEquipYtdSales(BigDecimal lyCommercEquipYtdSales) {
+        this.lyCommercEquipYtdSales = lyCommercEquipYtdSales;
+    }
+
+    public BigDecimal getLyPpFooandhousgsYtdSales() {
+        return lyPpFooandhousgsYtdSales;
+    }
+
+    public void setLyPpFooandhousgsYtdSales(BigDecimal lyPpFooandhousgsYtdSales) {
+        this.lyPpFooandhousgsYtdSales = lyPpFooandhousgsYtdSales;
+    }
+
+    public BigDecimal getLySpecNocodsupplYtdSales() {
+        return lySpecNocodsupplYtdSales;
+    }
+
+    public void setLySpecNocodsupplYtdSales(BigDecimal lySpecNocodsupplYtdSales) {
+        this.lySpecNocodsupplYtdSales = lySpecNocodsupplYtdSales;
+    }
+
+    public BigDecimal getId() {
+        return id;
+    }
+
+    public void setId(BigDecimal id) {
+        this.id = id;
+    }
+
+    public String getCusModifiedDate() {
+        return cusModifiedDate;
+    }
+
+    public void setCusModifiedDate(String cusModifiedDate) {
+        this.cusModifiedDate = cusModifiedDate == null ? null : cusModifiedDate.trim();
+    }
+
+    public String getSalYtdModifiedDate() {
+        return salYtdModifiedDate;
+    }
+
+    public void setSalYtdModifiedDate(String salYtdModifiedDate) {
+        this.salYtdModifiedDate = salYtdModifiedDate == null ? null : salYtdModifiedDate.trim();
+    }
+
+    public String getSalMtdModifiedDate() {
+        return salMtdModifiedDate;
+    }
+
+    public void setSalMtdModifiedDate(String salMtdModifiedDate) {
+        this.salMtdModifiedDate = salMtdModifiedDate == null ? null : salMtdModifiedDate.trim();
+    }
+
+    public String getSalClsModifiedDate() {
+        return salClsModifiedDate;
+    }
+
+    public void setSalClsModifiedDate(String salClsModifiedDate) {
+        this.salClsModifiedDate = salClsModifiedDate == null ? null : salClsModifiedDate.trim();
+    }
+
+    public String getFinModifiedDate() {
+        return finModifiedDate;
+    }
+
+    public void setFinModifiedDate(String finModifiedDate) {
+        this.finModifiedDate = finModifiedDate == null ? null : finModifiedDate.trim();
+    }
+
+    public String getSalesforceModifiedDate() {
+        return salesforceModifiedDate;
+    }
+
+    public void setSalesforceModifiedDate(String salesforceModifiedDate) {
+        this.salesforceModifiedDate = salesforceModifiedDate == null ? null : salesforceModifiedDate.trim();
+    }
+
+    public String getIsNewAccount() {
+        return isNewAccount;
+    }
+
+    public void setIsNewAccount(String isNewAccount) {
+        this.isNewAccount = isNewAccount == null ? null : isNewAccount.trim();
+    }
+
     public String getCusStatus() {
         return cusStatus;
     }
@@ -482,12 +805,28 @@ public class Output {
         this.cusStatus = cusStatus == null ? null : cusStatus.trim();
     }
 
-    public String getSalStatus() {
-        return salStatus;
+    public String getSalYtdStatus() {
+        return salYtdStatus;
     }
 
-    public void setSalStatus(String salStatus) {
-        this.salStatus = salStatus == null ? null : salStatus.trim();
+    public void setSalYtdStatus(String salYtdStatus) {
+        this.salYtdStatus = salYtdStatus == null ? null : salYtdStatus.trim();
+    }
+
+    public String getSalMtdStatus() {
+        return salMtdStatus;
+    }
+
+    public void setSalMtdStatus(String salMtdStatus) {
+        this.salMtdStatus = salMtdStatus == null ? null : salMtdStatus.trim();
+    }
+
+    public String getSalClsStatus() {
+        return salClsStatus;
+    }
+
+    public void setSalClsStatus(String salClsStatus) {
+        this.salClsStatus = salClsStatus == null ? null : salClsStatus.trim();
     }
 
     public String getFinStatus() {
@@ -506,131 +845,11 @@ public class Output {
         this.salesforceStatus = salesforceStatus == null ? null : salesforceStatus.trim();
     }
 
-    public Date getCusModifiedDate() {
-        return cusModifiedDate;
+    public String getBillingAddress() {
+        return billingAddress;
     }
 
-    public void setCusModifiedDate(Date cusModifiedDate) {
-        this.cusModifiedDate = cusModifiedDate;
-    }
-
-    public Date getSalModifiedDate() {
-        return salModifiedDate;
-    }
-
-    public void setSalModifiedDate(Date salModifiedDate) {
-        this.salModifiedDate = salModifiedDate;
-    }
-
-    public Date getFinModifiedDate() {
-        return finModifiedDate;
-    }
-
-    public void setFinModifiedDate(Date finModifiedDate) {
-        this.finModifiedDate = finModifiedDate;
-    }
-
-    public Date getSalesforceModifiedDate() {
-        return salesforceModifiedDate;
-    }
-
-    public void setSalesforceModifiedDate(Date salesforceModifiedDate) {
-        this.salesforceModifiedDate = salesforceModifiedDate;
-    }
-
-    public String getAccountName() {
-        return accountName;
-    }
-
-    public void setAccountName(String accountName) {
-        this.accountName = accountName == null ? null : accountName.trim();
-    }
-
-    public String getProvinceSegment() {
-        return provinceSegment;
-    }
-
-    public void setProvinceSegment(String provinceSegment) {
-        this.provinceSegment = provinceSegment == null ? null : provinceSegment.trim();
-    }
-
-    public String getCitySegment() {
-        return citySegment;
-    }
-
-    public void setCitySegment(String citySegment) {
-        this.citySegment = citySegment == null ? null : citySegment.trim();
-    }
-
-    public String getDistrictSegment() {
-        return districtSegment;
-    }
-
-    public void setDistrictSegment(String districtSegment) {
-        this.districtSegment = districtSegment == null ? null : districtSegment.trim();
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone == null ? null : phone.trim();
-    }
-
-    public BigDecimal getStaff() {
-        return staff;
-    }
-
-    public void setStaff(BigDecimal staff) {
-        this.staff = staff;
-    }
-
-    public String getIndustry() {
-        return industry;
-    }
-
-    public void setIndustry(String industry) {
-        this.industry = industry == null ? null : industry.trim();
-    }
-
-    public String getAccountSource() {
-        return accountSource;
-    }
-
-    public void setAccountSource(String accountSource) {
-        this.accountSource = accountSource == null ? null : accountSource.trim();
-    }
-
-    public String getSegmentation() {
-        return segmentation;
-    }
-
-    public void setSegmentation(String segmentation) {
-        this.segmentation = segmentation == null ? null : segmentation.trim();
-    }
-
-    public String getNatureOfFirm() {
-        return natureOfFirm;
-    }
-
-    public void setNatureOfFirm(String natureOfFirm) {
-        this.natureOfFirm = natureOfFirm == null ? null : natureOfFirm.trim();
-    }
-
-    public String getPurchaseType() {
-        return purchaseType;
-    }
-
-    public void setPurchaseType(String purchaseType) {
-        this.purchaseType = purchaseType == null ? null : purchaseType.trim();
-    }
-
-    public String getIsNewAccount() {
-        return isNewAccount;
-    }
-
-    public void setIsNewAccount(String isNewAccount) {
-        this.isNewAccount = isNewAccount == null ? null : isNewAccount.trim();
+    public void setBillingAddress(String billingAddress) {
+        this.billingAddress = billingAddress == null ? null : billingAddress.trim();
     }
 }
