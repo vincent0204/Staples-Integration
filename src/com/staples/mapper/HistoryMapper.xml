@@ -29,11 +29,11 @@
   <select id="getAllInsertedInfo" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
-		from SYS.HIS_FY
+		from SYS.HIS_FY WHERE YEAR = '2014'
 	</select>
 	
 	<select id="getCountOfInsertedInfo" resultType="Integer">
 		select count(1)	
-		from SYS.HIS_FY
+		from SYS.HIS_FY WHERE YEAR = '2014'
 	</select>
 </mapper>

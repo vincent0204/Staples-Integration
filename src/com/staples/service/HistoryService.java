@@ -26,18 +26,14 @@ public class HistoryService {
 	
 	static {
 		bulkUtil = new BulkUtil(
-				PropsUtil.SF_SERVER.getProperty("staples.full.username"), 
-				PropsUtil.SF_SERVER.getProperty("staples.full.password"),
-				PropsUtil.SF_SERVER.getProperty("staples.full.url"));
+				PropsUtil.SF_SERVER.getProperty("staples.prod.username"), 
+				PropsUtil.SF_SERVER.getProperty("staples.prod.password"),
+				PropsUtil.SF_SERVER.getProperty("staples.prod.url"));
 		session = MyBatisSqlSessionFactory.openSession();
 	}
 	
-	public void salesforceSync(){
-		try {
-			bulkUtil.runJob("Account", OperationEnum.upsert, PropsUtil.getOutputUrI());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public static void main(String[] args) {
+		new HistoryService().syncInformation();
 	}
 
 	public void syncInformation() {
@@ -50,11 +46,10 @@ public class HistoryService {
 			int cntOfRecords = historyMapper.getCountOfInsertedInfo();
 			logger.info("count of total exportData: " + cntOfRecords);
 			
-//			cntOfRecords = 200;
-			int offset =0 , limit = 10000;
+			int offset =0 , limit = 5000;
 			
 			long totalStartTime = new Date().getTime();
-			JobInfo job = bulkUtil.createJob("SAP_Sales_Margin_History__c", OperationEnum.insert);
+			JobInfo job = bulkUtil.createJob("SAP_Sales_Margin_History__c", OperationEnum.upsert);
 			List<BatchInfo> batchInfoList = new ArrayList<BatchInfo>();
 			
 			for (; offset < cntOfRecords; offset = offset + limit) {

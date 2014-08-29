@@ -20,6 +20,7 @@ public class CsvUtil {
 
 	private static final String COMMA = ",";
 	private static final String DOUBLE_QUOTATION = "\"";
+	private static final String ENCODE = PropsUtil.getEncode();
 	private static final Logger logger = Logger.getLogger(CsvUtil.class);
 
 	public static File createCSVFile(List<Output> exportData,
@@ -28,7 +29,7 @@ public class CsvUtil {
 		BufferedWriter csvFileOutputStream = null;
 		try {
 			csvFileOutputStream = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(csvFile), "UTF-8"), 1024);
+					new FileOutputStream(csvFile), ENCODE), 1024);
 
 			if (rowMapper != null) {
 				writeHeader(rowMapper, csvFileOutputStream);
@@ -99,7 +100,8 @@ public class CsvUtil {
 		Method method = Output.class.getMethod(methodName);
 
 		Object value = "";
-		if (("1".equals(output.getCusStatus()) && "sap_cus"
+		if ((methodName.endsWith("SapRefNo")
+				||"1".equals(output.getCusStatus()) && "sap_cus"
 				.equals(fieldCategory))
 				|| ("1".equals(output.getSalYtdStatus()) && "sap_ytd"
 						.equals(fieldCategory))
@@ -109,15 +111,15 @@ public class CsvUtil {
 						.equals(fieldCategory))
 				|| ("1".equals(output.getFinStatus()) && "sap_fin"
 						.equals(fieldCategory))
-				|| ("1".equals(output.getIsNewAccount()) && "sap_acc"
-						.equals(fieldCategory))) {
+				|| ("1".equals(output.getIsNewAccount()) && "sap_acc".
+						equals(fieldCategory))) {
 			value = method.invoke(output, new Object[] {});
 			if (value == null) {
 				value = "";
 			} else if (methodName.endsWith("Date")) {
 				value = DateUtil.format((String) value);
-			} else if (methodName.endsWith("Address")) {
-				value = value.toString().replace(',', '_').replace('"', '_')
+			} else if (methodName.endsWith("Address") || methodName.endsWith("Name")) {
+				value = value.toString().replace(',', '_').replace('"', ' ')
 						.replace('，', '_').replace('\n', ' ').replace('\r', ' ');
 			}
 		}

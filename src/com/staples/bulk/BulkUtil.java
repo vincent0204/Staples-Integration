@@ -30,7 +30,7 @@ import com.sforce.ws.ConnectorConfig;
 
 public class BulkUtil {
 	
-	private static final String SAP_EXTERNAL_FIELD = "SAP_Number__c";//SAP_Number__c
+	private static final String SAP_EXTERNAL_FIELD = "SAP_Number__c";//SAP_Number__c, SAP_His_External_ID__c
 	private static final int MAX_BYTES_PER_BATCH = 5000000;
 	private static final int MAX_ROWS_PER_BATCH = 5000;
 	private static final String LINE_END = "\n";
@@ -44,7 +44,7 @@ public class BulkUtil {
 		try {
 			connection = this.getBulkConnection(userName, password, url);
 		} catch (Exception e) {
-			logger.info(e.getMessage());
+			throw new RuntimeException(e.getMessage());
 		} 
 	}
 
@@ -54,12 +54,12 @@ public class BulkUtil {
 	public boolean runJob(String sobjectType, OperationEnum operation, String file) throws AsyncApiException,
 			ConnectionException, IOException {
 		JobInfo job = createJob(sobjectType, operation);
+		logger.info(job);
 		List<BatchInfo> batchInfoList = createBatchesFromCSVFile(job, file);
 		closeJob(job.getId());
-		awaitCompletion(job, batchInfoList);
 		return checkResults(job, batchInfoList);
 	}
-
+	
 	/**
 	 * Gets the results of the operation and checks for errors.
 	 */
@@ -286,7 +286,7 @@ public class BulkUtil {
 		try {
 			BatchInfo batchInfo = connection.createBatchFromStream(jobInfo,
 					tmpInputStream);
-			logger.info(batchInfo);
+			logger.info("salesforce batch Id: " + batchInfo.getId());
 			batchInfos.add(batchInfo);
 		} finally {
 			tmpInputStream.close();

@@ -121,27 +121,27 @@
 	<select id="getAllUpdatedInfo" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
-		from SALESFORCE.OUTPUT
+		from SALESFORCE.OUTPUT 
+		where SALESFORCE_STATUS = '0'
 	</select>
 	
 	<select id="getCountOfUpdatedInfo" resultType="Integer">
 		select count(1)	
-		from SALESFORCE.OUTPUT
+		from SALESFORCE.OUTPUT 
+		where SALESFORCE_STATUS = '0'
 	</select>
 
-	<parameterMap type="map" id="theSumParameterMap">
-		<parameter property="sum" jdbcType="INTEGER" mode="OUT" />
-	</parameterMap>
-	<update id="theSum" parameterMap="theSumParameterMap"
-		statementType="CALLABLE">
-		{call scott.adder(?)}
+	<update id="updateOutputStatus"> 
+		UPDATE SALESFORCE.OUTPUT 
+		SET SALESFORCE_STATUS = '1', CUS_STATUS = '0', FIN_STATUS = '0', SAL_YTD_STATUS = '0', SAL_MTD_STATUS = '0', SAL_CLS_STATUS = '0',
+			SALESFORCE_MODIFIED_DATE = SYSDATE, IS_NEW_ACCOUNT = '0'
+		WHERE SALESFORCE_STATUS = '0'
 	</update>
-
-	<update id="updateOutputStatusN" parameterType="Output"> 
-		UPDATE SALESFORCE.OUTPUT SET SALESFORCE_STATUS = '0', CUS_STATUS = '0', SAL_STATUS = '0', FIN_STATUS = '0'
-	</update>
-
-	<update id="updateOutputStatusY" parameterType="Output"> 
-		UPDATE SALESFORCE.OUTPUT SET SALESFORCE_STATUS = '1', CUS_STATUS = '1', SAL_STATUS = '1', FIN_STATUS = '1', SALESFORCE_MODIFIED_DATE = SYSDATE
-	</update>
+	
+	<select id="getStatusTrack" resultType="Integer">
+		select count(1)	
+		from SALESFORCE.STATUS_TRACK 
+		where LOGIC_SUCCESS = '1' AND KEY_DATE = to_char(SYSDATE, 'yyyymmdd')
+	</select>
+	
 </mapper>

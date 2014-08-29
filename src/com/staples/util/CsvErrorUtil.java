@@ -8,21 +8,21 @@ import java.io.OutputStreamWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
 
+import com.staples.domain.ErrorMsg;
 import com.staples.domain.History;
 
-public class CsvHistoryUtil {
-
+public class CsvErrorUtil {
+	
 	private static final String COMMA = ",";
 	private static final String DOUBLE_QUOTATION = "\"";
 	private static final Logger logger = Logger.getLogger(CsvUtil.class);
 
-	public static File createCSVFile(List<History> exportData,
+	public static File createCSVFile(ErrorMsg errorMsg,
 			Properties rowMapper, File csvFile) {
 
 		BufferedWriter csvFileOutputStream = null;
@@ -30,10 +30,8 @@ public class CsvHistoryUtil {
 			csvFileOutputStream = new BufferedWriter(new OutputStreamWriter(
 					new FileOutputStream(csvFile), "UTF-8"), 1024);
 
-			if (rowMapper != null) {
-				writeHeader(rowMapper, csvFileOutputStream);
-			}
-			writeDetail(exportData, rowMapper, csvFileOutputStream);
+			writeHeader(rowMapper, csvFileOutputStream);
+			writeDetail(errorMsg, rowMapper, csvFileOutputStream);
 			csvFileOutputStream.flush();
 		} catch (Exception e) {
 			logger.info(e.getMessage());
@@ -65,46 +63,39 @@ public class CsvHistoryUtil {
 		csvFileOutputStream.newLine();
 	}
 
-	private static void writeDetail(List<History> exportData,
-			Properties rowMapper, BufferedWriter csvFileOutputStream)
-			throws IOException, NoSuchMethodException, SecurityException,
-			IllegalAccessException, IllegalArgumentException,
-			InvocationTargetException {
+	private static void writeDetail(ErrorMsg errorMsg,
+		Properties rowMapper, BufferedWriter csvFileOutputStream)
+		throws IOException, NoSuchMethodException, SecurityException,
+		IllegalAccessException, IllegalArgumentException,
+		InvocationTargetException {
 
-		for (Iterator<History> iterData = exportData.iterator(); iterData
+		Set<String> headers = rowMapper.stringPropertyNames();
+		for (Iterator<String> iterField = headers.iterator(); iterField
 				.hasNext();) {
-			Object obj = iterData.next();
-			Set<String> headers = rowMapper.stringPropertyNames();
-			for (Iterator<String> iterField = headers.iterator(); iterField
-					.hasNext();) {
-				String methodName = (String) iterField.next();
-				boolean hasNextField = iterField.hasNext();
-				writeOneField(csvFileOutputStream, (History) obj, methodName,
-						hasNextField);
-			}
-
-			if (iterData.hasNext())
-				csvFileOutputStream.newLine();
+			String methodName = (String) iterField.next();
+			boolean hasNextField = iterField.hasNext();
+			writeOneField(csvFileOutputStream, errorMsg, methodName,
+					hasNextField);
 		}
 	}
 
 	private static void writeOneField(BufferedWriter csvFileOutputStream,
-			History history, String methodName, boolean hasNextField)
+			ErrorMsg errorMsg, String methodName, boolean hasNextField)
 			throws NoSuchMethodException, SecurityException,
 			IllegalAccessException, IllegalArgumentException,
 			InvocationTargetException, IOException {
 		
-		Method method = History.class.getMethod("get" + methodName.substring(0,1).toUpperCase() + methodName.substring(1));
+		Method method = ErrorMsg.class.getMethod("get" + methodName.substring(0,1).toUpperCase() + methodName.substring(1));
 
-		Object value = method.invoke(history, new Object[] {});
+		Object value = method.invoke(errorMsg, new Object[] {});
 
 		csvFileOutputStream.write(DOUBLE_QUOTATION + value + DOUBLE_QUOTATION);
 		if (hasNextField)
 			csvFileOutputStream.write(COMMA);
 	}
 
-	public static File createEmptyHistoryFile() {
-		File csvFile = new File(PropsUtil.getHistoryUrI());
+	public static File createEmptyErrorFile() {
+		File csvFile = new File(PropsUtil.getErrorUrI());
 
 		File parent = csvFile.getParentFile();
 		if (parent != null && !parent.exists()) {

@@ -1,5 +1,2 @@
-/application.properties
 /com
-/log4j.properties
-/mbgConfiguration.xml
-/mybatis-config.xml
+/sap_error_mapping.properties
